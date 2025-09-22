@@ -11,7 +11,7 @@ class Modele_Catalogue
      * @param $connexionPDO : connexion à la base de données
      * @return mixed : le tableau des Produit ou null (something went wrong...)
      */
-static function  Produit_Select()
+    static function Produit_Select()
     {
         $connexionPDO = Singleton_ConnexionPDO::getInstance();
         $requetePreparee = $connexionPDO->prepare('
@@ -48,7 +48,7 @@ order by idCategorie');
         return $tableauReponse;
     }
 
-// pour sélectionner la liste de produit selon l'Id Categorie du bouton cliqué
+    // pour sélectionner la liste de produit selon l'Id Categorie du bouton cliqué
     static function Select_Produit_Select_ParIdCateg($idCategorie, $type = "")
     {
 
@@ -93,7 +93,7 @@ where  categorie.idCategorie = :paramId ' . ($type == "client" ? "AND desactiver
         return $Categorie;
     }
 
-    static function Categorie_Select_Par_Libelle( $libelle)
+    static function Categorie_Select_Par_Libelle($libelle)
     {
         $connexionPDO = Singleton_ConnexionPDO::getInstance();
         $requetePreparee = $connexionPDO->prepare('select * from `categorie` where libelle = :paramlibelle');
@@ -103,7 +103,7 @@ where  categorie.idCategorie = :paramId ' . ($type == "client" ? "AND desactiver
         return $Categorie;
     }
 
-//fonction qui va récupérer les pourcentages dans la table TVA
+    //fonction qui va récupérer les pourcentages dans la table TVA
     static function TVA_Select_Tous()
     {
         $connexionPDO = Singleton_ConnexionPDO::getInstance();
@@ -140,7 +140,8 @@ from `tva`  ');
         $connexionPDO = Singleton_ConnexionPDO::getInstance();
         $requetePreparee = $connexionPDO->prepare(
             'INSERT INTO `produit` (`idProduit`, `nom`, `description`, `resume`, `fichierImage`, `prixCatalogueHT`, `idCategorie`, `idTVA`, `desactiverProduit`) 
-         VALUES (NULL, :paramnom, :paramdescription, :paramresume, :paramfichierImage, :paramprixVenteHT, :paramidCategorie, :paramidTVA, :paramdesactiverProduit);');
+         VALUES (NULL, :paramnom, :paramdescription, :paramresume, :paramfichierImage, :paramprixVenteHT, :paramidCategorie, :paramidTVA, :paramdesactiverProduit);'
+        );
 
         $requetePreparee->bindParam('paramnom', $nom);
         $requetePreparee->bindParam('paramdescription', $description);
@@ -163,7 +164,8 @@ from `tva`  ');
         $requetePreparee = $connexionPDO->prepare(
             'UPDATE `produit` 
         SET `reference`= :paramref
-        WHERE idProduit = :paramidProduit');
+        WHERE idProduit = :paramidProduit'
+        );
         $requetePreparee->bindParam('paramref', $reference);
         $requetePreparee->bindParam('paramidProduit', $idProduit);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
@@ -191,7 +193,7 @@ from `tva`  ');
      * @param $niveauAutorisation
      * @return mixed
      */
-// valeur du champ desactiverPrduit
+    // valeur du champ desactiverPrduit
 // valeur 0 : c'est actif sur le catalogue
 // valeur 1 : c'est désactivé sur le catalogue
     static function Produit_Modifier($idProduit, $nom, $description, $resume, $fichierImage, $prixCatalogueHT, $idCategorie, $idTVA, $desactiverProduit)
@@ -207,7 +209,8 @@ SET `nom`= :paramnom,
 `idCategorie`= :paramidCategorie,
 `idTVA`= :paramidTVA,
 `desactiverProduit`= :paramdesactiverProduit
-WHERE idProduit = :paramidProduit');
+WHERE idProduit = :paramidProduit'
+        );
         $requetePreparee->bindParam('paramnom', $nom);
         $requetePreparee->bindParam('paramdescription', $description);
         $requetePreparee->bindParam('paramresume', $resume);
@@ -222,7 +225,7 @@ WHERE idProduit = :paramidProduit');
     }
 
 
-// fonction pour modifier la valeur du champ desactiverPrduit
+    // fonction pour modifier la valeur du champ desactiverPrduit
 // valeur 0 : c'est actif sur le catalogue
 // valeur 1 : c'est désactivé sur le catalogue
     static function Categorie_Modifier_Desactivation($idCategorie, $desactiverCategorie)
@@ -231,14 +234,16 @@ WHERE idProduit = :paramidProduit');
         $requetePreparee = $connexionPDO->prepare(
             'UPDATE `categorie` 
 SET `desactiverCategorie`= :paramdesactiverCategorie
-WHERE idCategorie = :paramidCategorie');
+WHERE idCategorie = :paramidCategorie'
+        );
         $requetePreparee->bindParam('paramdesactiverCategorie', $desactiverCategorie);
         $requetePreparee->bindParam('paramidCategorie', $idCategorie);
         $reponse1 = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
         $requetePreparee = $connexionPDO->prepare(
             'UPDATE `produit` 
 SET `desactiverProduit`= :paramdesactiverCategorie
-WHERE idCategorie = :paramidCategorie');
+WHERE idCategorie = :paramidCategorie'
+        );
         $requetePreparee->bindParam('paramdesactiverCategorie', $desactiverCategorie);
         $requetePreparee->bindParam('paramidCategorie', $idCategorie);
         $reponse2 = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
@@ -249,7 +254,7 @@ WHERE idCategorie = :paramidCategorie');
         }
     }
 
-//Modifier une catégorie
+    //Modifier une catégorie
     static function Categorie_Modifier($idCategorie, $libelle, $description)
     {
         $connexionPDO = Singleton_ConnexionPDO::getInstance();
@@ -257,7 +262,8 @@ WHERE idCategorie = :paramidCategorie');
             'UPDATE `categorie` 
 SET `libelle`= :paramlibelle,
 `description`= :paramdescription
-WHERE idCategorie = :paramidCategorie');
+WHERE idCategorie = :paramidCategorie'
+        );
         $requetePreparee->bindParam('paramlibelle', $libelle);
         $requetePreparee->bindParam('paramdescription', $description);
         $requetePreparee->bindParam('paramidCategorie', $idCategorie);
@@ -270,7 +276,8 @@ WHERE idCategorie = :paramidCategorie');
         $connexionPDO = Singleton_ConnexionPDO::getInstance();
         $requetePreparee = $connexionPDO->prepare(
             'INSERT INTO `categorie` (`idCategorie`, `libelle`, `description`, `desactiverCategorie`) 
-         VALUES (NULL, :paramlibelle, :paramdescription, :paramdesactiverCategorie);');
+         VALUES (NULL, :paramlibelle, :paramdescription, :paramdesactiverCategorie);'
+        );
         $requetePreparee->bindParam('paramlibelle', $libelle);
         $requetePreparee->bindParam('paramdescription', $description);
         $requetePreparee->bindParam('paramdesactiverCategorie', $desactiver);

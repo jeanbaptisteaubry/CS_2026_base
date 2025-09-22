@@ -14,6 +14,7 @@ class Modele_Entreprise
     static function Entreprise_Select()
     {
         $connexionPDO = Singleton_ConnexionPDO::getInstance();
+
         $requetePreparee = $connexionPDO->prepare('select * from `entreprise` order by denomination');
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
         $tableauReponse = $requetePreparee->fetchAll(PDO::FETCH_ASSOC);
@@ -32,8 +33,8 @@ class Modele_Entreprise
 select * from `entreprise` where idEntreprise = :paramId');
         $requetePreparee->bindParam('paramId', $idEntreprise);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
-        $etudiant = $requetePreparee->fetch(PDO::FETCH_ASSOC);
-        return $etudiant;
+        $entreprise = $requetePreparee->fetch(PDO::FETCH_ASSOC);
+        return $entreprise;
     }
 
     /**
