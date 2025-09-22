@@ -40,28 +40,28 @@ class Controleur_Gerer_Rgpd
         $this->init();
         if (isset($_REQUEST["accepterRGPD"])) {
             if ($_REQUEST["accepterRGPD"] == 0) {
-                // Enregistrer le refus global RGPD avant de déconnecter
+                // Enregistrer le refus global RGPD avant de dÃ©connecter
                 if (isset($_SESSION["idUtilisateur"])) {
                     $idUserRefus = (int)$_SESSION["idUtilisateur"];
                     Modele_Utilisateur::Utilisateur_UpdateRgpd($idUserRefus, 0, $_SERVER['REMOTE_ADDR'] ?? '');
                     
-                    //On ajoute un évènement pour l'acceptation globale
+                    //On ajoute un Ã©vÃ¨nement pour l'acceptation globale
                     $versionId = (int)(Modele_VersionsPolitique::VersionsPolitique_Select_Courante()['id'] ?? 0);
                     $rgpdGlobalNom = 'RGPD global';
                     $finaliteGlobale = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
                     if ($finaliteGlobale === false) {
-                        //On n'a pas trouvé la finalité globale, donc on la crée !
+                        //On n'a pas trouvÃ© la finalitÃ© globale, donc on la crÃ©e !
                         Modele_FinalitesConsentement::FinalitesConsentement_Ajouter($rgpdGlobalNom, 0);
                         $finaliteGlobale = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
                     }
                     if ($finaliteGlobale !== false && $versionId > 0) {
-                        //On ajoute le consentement à la finalité globale.
+                        //On ajoute le consentement Ã  la finalitÃ© globale.
                         $finaliteIdGlobal = (int)$finaliteGlobale['id'];
-                        $idConsentGlobal = Modele_Consentements::Consentements_Ajouter($idUserRefus, $finaliteIdGlobal, 'refuse', $versionId, $_SERVER['REMOTE_ADDR'] ?? null);
-                        if ($idConsentGlobal !== false) {
+                        $consentSaved = Modele_Consentements::Consentements_Ajouter($idUserRefus, $finaliteIdGlobal, 'refuse', $versionId, $_SERVER['REMOTE_ADDR'] ?? null);
+                        if ($consentSaved) {
                             $snapshot = $versionId.'|'.$finaliteIdGlobal.'|refuse|'.$idUserRefus;
                             $hash = hash('sha256', $snapshot);
-                            \App\Modele\Modele_EvenementsConsentement::EvenementsConsentement_Ajouter((int)$idConsentGlobal, 'refus', $versionId, $hash, $_SERVER['REMOTE_ADDR'] ?? null, $idUserRefus);
+                            \App\Modele\Modele_EvenementsConsentement::EvenementsConsentement_Ajouter($idUserRefus, $finaliteIdGlobal, 'refus', $versionId, $hash, $_SERVER['REMOTE_ADDR'] ?? null);
                         }
                     }
                 }
@@ -74,7 +74,7 @@ class Controleur_Gerer_Rgpd
 
                 $utilisateur = Modele_Utilisateur::Utilisateur_Select_ParId($_SESSION["idUtilisateur"]);
                 if ($utilisateur != null) {
-                    // Enregistrer les consentements par finalité si fournis
+                    // Enregistrer les consentements par finalitÃ© si fournis
                     $finalitesPost = $_REQUEST['finalite'] ?? [];
                     $versionId = isset($_REQUEST['version_politique_id']) ? (int)$_REQUEST['version_politique_id'] : 0;
                     if ($versionId === 0) {
@@ -101,22 +101,22 @@ class Controleur_Gerer_Rgpd
                                 }
                             }
                             if ($needInsert) {
-                                $idConsent = Modele_Consentements::Consentements_Ajouter((int)$utilisateur['idUtilisateur'], $finaliteId, $statut, $versionId, $ip);
-                                if ($idConsent !== false) {
+                                $consentSaved = Modele_Consentements::Consentements_Ajouter((int)$utilisateur['idUtilisateur'], $finaliteId, $statut, $versionId, $ip);
+                                if ($consentSaved) {
                                     $snapshot = $versionId.'|'.$finaliteId.'|'.$statut.'|'.$utilisateur['idUtilisateur'];
                                     $hash = hash('sha256', $snapshot);
-                                    \App\Modele\Modele_EvenementsConsentement::EvenementsConsentement_Ajouter((int)$idConsent, $eventType, $versionId, $hash, $ip, (int)$utilisateur['idUtilisateur']);
+                                    \App\Modele\Modele_EvenementsConsentement::EvenementsConsentement_Ajouter((int)$utilisateur['idUtilisateur'], $finaliteId, $eventType, $versionId, $hash, $ip);
                                 }
                             }
                         }
                     }
                     Modele_Utilisateur::Utilisateur_UpdateRgpd($utilisateur["idUtilisateur"], $_REQUEST["accepterRGPD"], $_SERVER['REMOTE_ADDR']);
 
-                    // Enregistrer aussi l'action globale RGPD dans les tables de consentement/événements
+                    // Enregistrer aussi l'action globale RGPD dans les tables de consentement/Ã©vÃ©nements
                     $rgpdGlobalNom = 'RGPD global';
                     $finaliteGlobale = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
                     if ($finaliteGlobale === false) {
-                        // Crée en inactif pour ne pas l'afficher dans l'UI
+                        // CrÃ©e en inactif pour ne pas l'afficher dans l'UI
                         Modele_FinalitesConsentement::FinalitesConsentement_Ajouter($rgpdGlobalNom, 0);
                         $finaliteGlobale = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
                     }
@@ -128,12 +128,12 @@ class Controleur_Gerer_Rgpd
                             $versionId = (int)(Modele_VersionsPolitique::VersionsPolitique_Select_Courante()['id'] ?? 0);
                         }
                         if ($versionId > 0) {
-                            $idConsentGlobal = Modele_Consentements::Consentements_Ajouter((int)$utilisateur['idUtilisateur'], $finaliteIdGlobal, $statutGlobal, $versionId, $_SERVER['REMOTE_ADDR'] ?? null);
-                            if ($idConsentGlobal !== false) {
+                            $consentSaved = Modele_Consentements::Consentements_Ajouter((int)$utilisateur['idUtilisateur'], $finaliteIdGlobal, $statutGlobal, $versionId, $_SERVER['REMOTE_ADDR'] ?? null);
+                            if ($consentSaved) {
                                 $eventType = ($statutGlobal === 'accorde') ? 'accord' : 'refus';
                                 $snapshot = $versionId.'|'.$finaliteIdGlobal.'|'.$statutGlobal.'|'.$utilisateur['idUtilisateur'];
                                 $hash = hash('sha256', $snapshot);
-                                \App\Modele\Modele_EvenementsConsentement::EvenementsConsentement_Ajouter((int)$idConsentGlobal, $eventType, $versionId, $hash, $_SERVER['REMOTE_ADDR'] ?? null, (int)$utilisateur['idUtilisateur']);
+                                \App\Modele\Modele_EvenementsConsentement::EvenementsConsentement_Ajouter((int)$utilisateur['idUtilisateur'], $finaliteIdGlobal, $eventType, $versionId, $hash, $_SERVER['REMOTE_ADDR'] ?? null);
                             }
                         }
                     }
@@ -161,7 +161,7 @@ class Controleur_Gerer_Rgpd
                      
                     }
                 } else {
-                    $this->vue->addToCorps(new Vue_AfficherMessage("Erreur utilisateur non trouvé"));
+                    $this->vue->addToCorps(new Vue_AfficherMessage("Erreur utilisateur non trouvÃ©"));
 
                 }
             }

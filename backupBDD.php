@@ -8,7 +8,7 @@
  */
 
 // ======================= CONFIG =======================
-$containerName = 'mysql_cafe';          // nom du conteneur MySQL (docker ps)
+$containerName = 'mysql_cafe2025';          // nom du conteneur MySQL (docker ps)
 $dbHost        = '127.0.0.1';      // host accessible par PHP (ou 'mysql' si PHP est en conteneur)
 $dbPort        = 3306;
 $dbName        = 'BDDCAFE2025';

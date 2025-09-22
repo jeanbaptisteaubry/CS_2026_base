@@ -30,7 +30,7 @@ class Vue_Admin_Rgpd_Historique extends Vue_Composant
             $id = (int)$e['id'];
             $survenu = htmlspecialchars($e['survenu_le'] ?? '');
             $idUtil = (int)($e['idUtilisateur'] ?? 0);
-            $consentId = (int)($e['consentement_id'] ?? 0);
+            $finaliteId = (int)($e['consentement_id'] ?? 0);
             $type = htmlspecialchars($e['type_evenement'] ?? '');
             $verPol = (int)($e['version_politique_id'] ?? 0);
             $hash = htmlspecialchars(substr($e['hash_snapshot'] ?? '', 0, 16)).'…';
@@ -40,7 +40,7 @@ class Vue_Admin_Rgpd_Historique extends Vue_Composant
                 ."<td>$id</td>"
                 ."<td>$survenu</td>"
                 ."<td>$idUtil</td>"
-                ."<td>$consentId</td>"
+                ."<td>$finaliteId</td>"
                 ."<td>$type</td>"
                 ."<td>$verPol</td>"
                 ."<td><code>$hash</code></td>"
@@ -62,7 +62,7 @@ class Vue_Admin_Rgpd_Historique extends Vue_Composant
                             <th>ID</th>
                             <th>Date</th>
                             <th>Utilisateur</th>
-                            <th>Consentement</th>
+                            <th>Finalit&eacute;</th>
                             <th>Type</th>
                             <th>Version politique</th>
                             <th>Hash</th>
