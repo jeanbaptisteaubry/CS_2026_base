@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 namespace App\Vue;
 use App\Utilitaire\Vue_Composant;
 
