@@ -97,7 +97,7 @@ switch ((int) $typeConnexion) {
         $app->get('/Gerer_entreprisesPartenaires/Modifer', [$entreprisesPartenairesController, 'Modifer']);
         $app->post('/Gerer_entreprisesPartenaires/mettreAJour', [$entreprisesPartenairesController, 'mettreAJour']);
         $app->post('/Gerer_entreprisesPartenaires/DesactiverEntreprise', [$entreprisesPartenairesController, 'DesactiverEntreprise']);
-        $app->post('/Gerer_entreprisesPartenaires/ActiverEntreprise', [$entreprisesPartenairesController, 'ActiverEntreprise']); // (Optionnel) réinit MDP entreprise: // $app->post('/Gerer_entreprisesPartenaires/reinitialiserMDP', [$entreprisesPartenairesController, 'rÃ©initialiserMDP']);
+        $app->post('/Gerer_entreprisesPartenaires/ActiverEntreprise', [$entreprisesPartenairesController, 'ActiverEntreprise']); // (Optionnel) réinit MDP entreprise: // $app->post('/Gerer_entreprisesPartenaires/reinitialiserMDP', [$entreprisesPartenairesController, 'réinitialiserMDP']);
         $app->get('/Gerer_utilisateur', [$utilisateurController, 'default']);
         $app->get('/Gerer_utilisateur/nouveau', [$utilisateurController, 'nouveau']);
         $app->post('/Gerer_utilisateur/buttonCreerUtilisateur', [$utilisateurController, 'buttonCreerUtilisateur']);

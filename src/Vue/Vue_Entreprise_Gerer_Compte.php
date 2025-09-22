@@ -57,6 +57,18 @@ class Vue_Entreprise_Gerer_Compte  extends Vue_Composant
         </tr>
         <tr>
             <td>
+                <form action='/Gerer_Rgpd' method='get' style='display: contents'>
+                    
+                    
+                    <button type='submit' >
+                        G&eacute;rer ma RGPD
+                    </button>
+                    
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <form action='/Gerer_monCompte/deconnexionEntreprise' method='get'  style='display: contents'>
                       
                     
@@ -67,7 +79,14 @@ class Vue_Entreprise_Gerer_Compte  extends Vue_Composant
                 </form>
             </td>
         </tr>
+
     </table>
    <br> $this->msg   ";
     }
 }
+
+
+
+
+
+

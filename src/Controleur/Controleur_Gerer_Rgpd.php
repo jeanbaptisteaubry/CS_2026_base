@@ -44,15 +44,19 @@ class Controleur_Gerer_Rgpd
                 if (isset($_SESSION["idUtilisateur"])) {
                     $idUserRefus = (int)$_SESSION["idUtilisateur"];
                     Modele_Utilisateur::Utilisateur_UpdateRgpd($idUserRefus, 0, $_SERVER['REMOTE_ADDR'] ?? '');
+                    
+                    //On ajoute un évènement pour l'acceptation globale
                     $versionId = (int)(Modele_VersionsPolitique::VersionsPolitique_Select_Courante()['id'] ?? 0);
                     $rgpdGlobalNom = 'RGPD global';
-                    $f = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
-                    if ($f === false) {
+                    $finaliteGlobale = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
+                    if ($finaliteGlobale === false) {
+                        //On n'a pas trouvé la finalité globale, donc on la crée !
                         Modele_FinalitesConsentement::FinalitesConsentement_Ajouter($rgpdGlobalNom, 0);
-                        $f = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
+                        $finaliteGlobale = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
                     }
-                    if ($f !== false && $versionId > 0) {
-                        $finaliteIdGlobal = (int)$f['id'];
+                    if ($finaliteGlobale !== false && $versionId > 0) {
+                        //On ajoute le consentement à la finalité globale.
+                        $finaliteIdGlobal = (int)$finaliteGlobale['id'];
                         $idConsentGlobal = Modele_Consentements::Consentements_Ajouter($idUserRefus, $finaliteIdGlobal, 'refuse', $versionId, $_SERVER['REMOTE_ADDR'] ?? null);
                         if ($idConsentGlobal !== false) {
                             $snapshot = $versionId.'|'.$finaliteIdGlobal.'|refuse|'.$idUserRefus;
@@ -110,14 +114,14 @@ class Controleur_Gerer_Rgpd
 
                     // Enregistrer aussi l'action globale RGPD dans les tables de consentement/événements
                     $rgpdGlobalNom = 'RGPD global';
-                    $f = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
-                    if ($f === false) {
+                    $finaliteGlobale = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
+                    if ($finaliteGlobale === false) {
                         // Crée en inactif pour ne pas l'afficher dans l'UI
                         Modele_FinalitesConsentement::FinalitesConsentement_Ajouter($rgpdGlobalNom, 0);
-                        $f = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
+                        $finaliteGlobale = Modele_FinalitesConsentement::FinalitesConsentement_Select_ByNom($rgpdGlobalNom);
                     }
-                    if ($f !== false) {
-                        $finaliteIdGlobal = (int)$f['id'];
+                    if ($finaliteGlobale !== false) {
+                        $finaliteIdGlobal = (int)$finaliteGlobale['id'];
                         $statutGlobal = ((int)$_REQUEST['accepterRGPD'] === 1) ? 'accorde' : 'refuse';
                         // S'assure d'avoir une version de politique courante
                         if (!isset($versionId) || $versionId <= 0) {
@@ -135,6 +139,7 @@ class Controleur_Gerer_Rgpd
                     }
                     $_SESSION["idCategorie_utilisateur"] = $utilisateur["idCategorie_utilisateur"];
                     switch ($utilisateur["idCategorie_utilisateur"]) {
+                        case 5:
                         case 1:
                         case 2:
                             $this->vue->setMenu(new Vue_Menu_Administration($_SESSION["idCategorie_utilisateur"]));
@@ -166,9 +171,9 @@ class Controleur_Gerer_Rgpd
             $finalites = Modele_FinalitesConsentement::FinalitesConsentement_Select_Actives();
             $consentsMap = [];
             if ($utilisateur && isset($utilisateur["idUtilisateur"])) {
-                foreach ($finalites as $f) {
-                    $last = Modele_Consentements::Consentements_Select_Dernier_ByUtilisateur_Finalite($utilisateur["idUtilisateur"], (int)$f['id']);
-                    if ($last) { $consentsMap[(int)$f['id']] = $last['statut']; }
+                foreach ($finalites as $finaliteGlobale) {
+                    $last = Modele_Consentements::Consentements_Select_Dernier_ByUtilisateur_Finalite($utilisateur["idUtilisateur"], (int)$finaliteGlobale['id']);
+                    if ($last) { $consentsMap[(int)$finaliteGlobale['id']] = $last['statut']; }
                 }
             }
             $this->vue->addToCorps(new Vue_ConsentementRGPD($utilisateur, $politique, $finalites, $consentsMap));

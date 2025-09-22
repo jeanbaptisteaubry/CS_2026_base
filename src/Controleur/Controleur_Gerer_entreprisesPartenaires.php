@@ -54,7 +54,7 @@ class Controleur_Gerer_entreprisesPartenaires
         return $response;
     }
 
-    public function rÃ©initialiserMDP(Request $request, Response $response, array $args): Response
+    public function réinitialiserMDP(Request $request, Response $response, array $args): Response
     {
         $this->init();
         //Réinitialiser MDP sur la fiche de l'entreprise

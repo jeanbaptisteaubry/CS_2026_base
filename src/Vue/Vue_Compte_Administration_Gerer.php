@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 namespace App\Vue;
 use App\Utilitaire\Vue_Composant;
 
@@ -17,7 +17,7 @@ class Vue_Compte_Administration_Gerer extends Vue_Composant
     function donneTexte(): string
     {
         return " 
-    <H1>Gérer mon compte</H1>
+    <H1>G&eacute;rer mon compte</H1>
     <table style='display: inline-block'>
         <tr>
             <td>
@@ -30,11 +30,20 @@ class Vue_Compte_Administration_Gerer extends Vue_Composant
         </tr>
         <tr>
             <td>
+                <form action='/Gerer_Rgpd' method='get' style='display: contents'>
+                    
+                    
+                    <button type='submit' >G&eacute;rer ma RGPD</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <form action='/$this->action/SeDeconnecter' method='get' style='display: contents'>
                      
                     
                     <button type='submit' >
-                        Se déconnecter 
+                        Se d&eacute;connecter 
                     </button>
                 </form>
             </td>
