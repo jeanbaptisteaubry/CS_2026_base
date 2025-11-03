@@ -1280,16 +1280,16 @@ CREATE TABLE `salarie` (
 -- Données de la table `salarie`
 --
 INSERT INTO `salarie` (`idSalarie`,`nom`,`prenom`,`mail`,`idEntreprise`,`roleEntreprise`,`actif`) VALUES
-(9,'Gerant','Auto','gerant@zoombox.local',1,'Gérant',49),
-(10,'Vendeur','Un','vendeur1@zoombox.local',1,'Vendeur',49),
-(11,'Gerant','Auto','gerant@edgeblab.local',2,'Gérant',49),
-(12,'Vendeur','Un','vendeur1@edgeblab.local',2,'Vendeur',49),
-(13,'Gerant','Auto','gerant@gabcube.local',3,'Gérant',49),
-(14,'Vendeur','Un','vendeur1@gabcube.local',3,'Vendeur',49),
-(15,'Gerant','Auto','gerant@jazzy.local',4,'Gérant',49),
-(16,'Vendeur','Un','vendeur1@jazzy.local',4,'Vendeur',49),
-(17,'Gerant','Auto','gerant@devbug.local',5,'Gérant',49),
-(18,'Vendeur','Un','vendeur1@devbug.local',5,'Vendeur',49);
+(9,'Gerant','Auto','gerant@zoombox.local',1,'Gérant',1),
+(10,'Vendeur','Un','vendeur1@zoombox.local',1,'Vendeur',1),
+(11,'Gerant','Auto','gerant@edgeblab.local',2,'Gérant',1),
+(12,'Vendeur','Un','vendeur1@edgeblab.local',2,'Vendeur',1),
+(13,'Gerant','Auto','gerant@gabcube.local',3,'Gérant',1),
+(14,'Vendeur','Un','vendeur1@gabcube.local',3,'Vendeur',1),
+(15,'Gerant','Auto','gerant@jazzy.local',4,'Gérant',1),
+(16,'Vendeur','Un','vendeur1@jazzy.local',4,'Vendeur',1),
+(17,'Gerant','Auto','gerant@devbug.local',5,'Gérant',1),
+(18,'Vendeur','Un','vendeur1@devbug.local',5,'Vendeur',1);
 
 --
 -- Structure de la table `tentatives_connexion`
@@ -1366,25 +1366,25 @@ CREATE TABLE `utilisateur` (
 -- Données de la table `utilisateur`
 --
 INSERT INTO `utilisateur` (`idUtilisateur`,`login`,`motDePasse`,`idCategorie_utilisateur`,`desactiver`,`aAccepteRGPD`,`dateAcceptationRGPD`,`ipRGPD`,`DoitChangerMotDePasse`,`motDePasseTemporaire`,`expirationMotDePasseTemporaire`) VALUES
-(1,'root@cafe.local','GVUwKyqCEFg7j!yU4&',1,0,49,'2025-09-14','::1',48,NULL,NULL),
-(2,'gestionnaire@cafe.local','gestion',2,0,NULL,NULL,NULL,49,'',NULL),
-(3,'commercial@cafe.local','#XMZLzsZ?R?#',5,0,NULL,NULL,NULL,49,'',NULL),
-(4,'contact@zoombox.com','secret',3,0,NULL,NULL,NULL,49,'',NULL),
-(5,'contact@edgeblab.com','secret',3,0,NULL,NULL,NULL,49,'',NULL),
-(6,'contact@gabcube.com','secret',3,0,NULL,NULL,NULL,49,'',NULL),
-(7,'contact@jazzy.com','secret',3,0,NULL,NULL,NULL,49,'',NULL),
-(8,'contact@devbug.com','secret',3,0,NULL,NULL,NULL,49,'',NULL),
-(9,'gerant@zoombox.local','secret',4,0,NULL,NULL,NULL,49,'',NULL),
-(10,'vendeur1@zoombox.local','secret',4,0,NULL,NULL,NULL,49,'',NULL),
-(11,'gerant@edgeblab.local','secret',4,0,NULL,NULL,NULL,49,'',NULL),
-(12,'vendeur1@edgeblab.local','secret',4,0,NULL,NULL,NULL,49,'',NULL),
-(13,'gerant@gabcube.local','secret',4,0,NULL,NULL,NULL,49,'',NULL),
-(14,'vendeur1@gabcube.local','secret',4,0,NULL,NULL,NULL,49,'',NULL),
-(15,'gerant@jazzy.local','secret',4,0,NULL,NULL,NULL,49,'',NULL),
-(16,'vendeur1@jazzy.local','secret',4,0,NULL,NULL,NULL,49,'',NULL),
-(17,'gerant@devbug.local','secret',4,0,NULL,NULL,NULL,49,'',NULL),
-(18,'vendeur1@devbug.local','secret',4,0,NULL,NULL,NULL,49,'',NULL),
-(19,'rgpd@cafe.local','rgpd',6,0,49,'2024-06-10','::1',48,'',NULL);
+(1,'root@cafe.local','GVUwKyqCEFg7j!yU4&',1,0,1,'2025-09-14','::1',1,NULL,NULL),
+(2,'gestionnaire@cafe.local','gestion',2,0,NULL,NULL,NULL,1,'',NULL),
+(3,'commercial@cafe.local','#XMZLzsZ?R?#',5,0,NULL,NULL,NULL,1,'',NULL),
+(4,'contact@zoombox.com','secret',3,0,NULL,NULL,NULL,1,'',NULL),
+(5,'contact@edgeblab.com','secret',3,0,NULL,NULL,NULL,1,'',NULL),
+(6,'contact@gabcube.com','secret',3,0,NULL,NULL,NULL,1,'',NULL),
+(7,'contact@jazzy.com','secret',3,0,NULL,NULL,NULL,1,'',NULL),
+(8,'contact@devbug.com','secret',3,0,NULL,NULL,NULL,1,'',NULL),
+(9,'gerant@zoombox.local','secret',4,0,NULL,NULL,NULL,1,'',NULL),
+(10,'vendeur1@zoombox.local','secret',4,0,NULL,NULL,NULL,1,'',NULL),
+(11,'gerant@edgeblab.local','secret',4,0,NULL,NULL,NULL,1,'',NULL),
+(12,'vendeur1@edgeblab.local','secret',4,0,NULL,NULL,NULL,1,'',NULL),
+(13,'gerant@gabcube.local','secret',4,0,NULL,NULL,NULL,1,'',NULL),
+(14,'vendeur1@gabcube.local','secret',4,0,NULL,NULL,NULL,1,'',NULL),
+(15,'gerant@jazzy.local','secret',4,0,NULL,NULL,NULL,1,'',NULL),
+(16,'vendeur1@jazzy.local','secret',4,0,NULL,NULL,NULL,1,'',NULL),
+(17,'gerant@devbug.local','secret',4,0,NULL,NULL,NULL,1,'',NULL),
+(18,'vendeur1@devbug.local','secret',4,0,NULL,NULL,NULL,1,'',NULL),
+(19,'rgpd@cafe.local','rgpd',6,0,1,'2024-06-10','::1',0,'',NULL);
 
 --
 -- Structure de la table `versions_politique`
