@@ -298,6 +298,8 @@ class Controleur_visiteur
                         if ($utilisateur["DoitChangerMotDePasse"] == 1) {
                             $this->vue->addToCorps(new \App\Vue\Vue_Utilisateur_Changement_MDPForce());
                         } else {
+                             Modele_Utilisateur::Utilisateur_SupprimerMotDePasseTemporaire($utilisateur["idUtilisateur"]);
+                         
                             if ($utilisateur["aAccepteRGPD"] == 1) {
                                 $_SESSION["idCategorie_utilisateur"] = $utilisateur["idCategorie_utilisateur"];
                                 switch ($utilisateur["idCategorie_utilisateur"]) {
