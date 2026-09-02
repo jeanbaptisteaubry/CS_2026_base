@@ -62,7 +62,7 @@ CREATE TABLE `categorie_utilisateur` (
 
 LOCK TABLES `categorie_utilisateur` WRITE;
 /*!40000 ALTER TABLE `categorie_utilisateur` DISABLE KEYS */;
-INSERT INTO `categorie_utilisateur` VALUES (1,'administrateur','administrateur du logiciel'),(2,'gestionnaire café : catalogue','Gestionnaire du catalogue de l\'entreprise'),(3,'entreprise cliente','entreprise cliente, pour administrer'),(4,'salarie entreprise cliente','salarié pour traiter des commandes'),(5,'Commercial Café','Salarié gérant les ventes et la relation avec les entreprises clientes');
+INSERT INTO `categorie_utilisateur` VALUES (1,'administrateur','administrateur du logiciel'),(2,'salarié café','Salarié de l\'entreprise café'),(3,'entreprise cliente','entreprise cliente, pour administrer'),(4,'salarie entreprise cliente','salarié pour traiter des commandes');
 /*!40000 ALTER TABLE `categorie_utilisateur` ENABLE KEYS */;
 UNLOCK TABLES;
 
